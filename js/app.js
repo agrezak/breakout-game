@@ -1,3 +1,5 @@
+// Variables
+
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
@@ -13,10 +15,18 @@ var paddleX = (canvas.width-paddleWidth)/2;
 var paddleLeft = false;
 var paddleRight = false;
 
-document.addEventListener('keydown', keyLeft, false);
-document.addEventListener('keyup', keyRight, false);
+// End of variables
 
-function keyLeft(e) {
+// Event listeners
+
+document.addEventListener('keydown', pressed, false);
+document.addEventListener('keyup', notPressed, false);
+
+// End of event listeners
+
+// Function that is changing value of variable when key is pressed
+
+function pressed(e) {
     if(e.keyCode == 39) {
         paddleRight = true;
     }
@@ -25,7 +35,10 @@ function keyLeft(e) {
     }
 }
 
-function keyRight(e) {
+// Function that is changing value of variable when key is let go
+
+
+function notPressed(e) {
     if(e.keyCode == 39) {
         paddleRight = false;
     }
@@ -45,7 +58,7 @@ function ball() {
 function paddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight);
-    ctx.fillStyle = "#0095DD";
+    ctx.fillStyle = "#3498db";
     ctx.fill();
     ctx.closePath()
 }
