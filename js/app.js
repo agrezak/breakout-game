@@ -1,19 +1,31 @@
-// Variables
+// --- Variables ---
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+// X, Y position and size of ball
 var xPos = canvas.width/2;
 var yPos = canvas.height-20;
 var xMove = 3;
 var yMove = -3;
 var ballRadius = 10;
 
+// Paddle size and position
 var paddleHeight = 10;
 var paddleWidth = 90;
 var paddleX = (canvas.width-paddleWidth)/2;
 var paddleLeft = false;
 var paddleRight = false;
+
+// Bricks
+
+var brickRows = 4;
+var brickColumns = 4;
+var brickWidth = 50;
+var brickHeight = 25;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
 
 // End of variables
 
@@ -37,13 +49,22 @@ function pressed(e) {
 
 // Function that is changing value of variable when key is let go
 
-
 function notPressed(e) {
     if(e.keyCode == 39) {
         paddleRight = false;
     }
     else if (e.keyCode === 37) {
         paddleLeft = false;
+    }
+}
+
+// Bricks array
+
+var bricks = [];
+for(c=0; c<brickColumns; c++) {
+    bricks[c] = [];
+    for(r=0; r<brickRows; r++) {
+        bricks[c][r] = { x: 0, y: 0 };
     }
 }
 
@@ -67,10 +88,29 @@ function paddle() {
     ctx.closePath()
 }
 
+// Function that creates bricks
+
+function createBricks() {
+    for(c=0; c<brickColumns; c++) {
+        for(r=0; r<brickRows; r++) {
+            var brickXpos = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+            var brickYpos = (r*(brickHeight+brickPadding))+brickOffsetTop;
+            bricks[c][r].x = brickXpos;
+            bricks[c][r].y = brickYpos;
+            ctx.beginPath();
+            ctx.rect(brickXpos, brickYpos, brickWidth, brickHeight);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+    }
+}
+
 // Function that controls the paddle and ball behaviour/movement
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    createBricks();
     ball();
     paddle();
 
