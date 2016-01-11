@@ -4,6 +4,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 // X, Y position and size of ball
+
 var xPos = canvas.width/2;
 var yPos = canvas.height-20;
 var xMove = 3;
@@ -11,6 +12,7 @@ var yMove = -3;
 var ballRadius = 10;
 
 // Paddle size and position
+
 var paddleHeight = 10;
 var paddleWidth = 90;
 var paddleX = (canvas.width-paddleWidth)/2;
@@ -20,13 +22,17 @@ var offset = 10;
 
 // Bricks
 
-var brickRows = 4;
-var brickColumns = 4;
+var brickRows = 7;
+var brickColumns = 5;
 var brickWidth = 50;
 var brickHeight = 25;
 var brickPadding = 10;
 var brickOffsetTop = 50;
 var brickOffsetLeft = 200;
+
+// Uncategorized variables
+
+var score = 0;
 
 // End of variables
 
@@ -67,6 +73,14 @@ for(c=0; c<brickColumns; c++) {
     for(r=0; r<brickRows; r++) {
         bricks[c][r] = { x: 0, y: 0, status: 1 };
     }
+}
+
+// Function that creates scorebar and shows your current score (+1 for destroying a brick)
+
+function scorebar() {
+    ctx.font = "14px Arial";
+    ctx.fillStyle = "#1abc9c";
+    ctx.fillText("Your score = "+score, 10, 15);
 }
 
 // Function that creates the ball
@@ -119,6 +133,7 @@ function bricksCollision() {
                 if(xPos > b.x && xPos < b.x+brickWidth && yPos > b.y && yPos < b.y+brickHeight) {
                     yMove = -yMove;
                     b.status = 0;
+                    score++;
                 }
             }
         }
@@ -133,6 +148,7 @@ function draw() {
     ball();
     paddle();
     bricksCollision();
+    scorebar();
 
     if(xPos + xMove > canvas.width-ballRadius || xPos + xMove < ballRadius) {
         xMove = -xMove;
