@@ -61,10 +61,10 @@ function draw() {
         yMove = -yMove;
     }
     if(paddleRight && paddleX < canvas.width-paddleWidth) {
-        paddleX += 7;
+        paddleX += 5;
     }
     else if(paddleLeft && paddleX > 0) {
-        paddleX -= 7;
+        paddleX -= 5;
     }
     xPos += xMove;
     yPos += yMove;
