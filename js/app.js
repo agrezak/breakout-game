@@ -5,12 +5,12 @@ var ctx = canvas.getContext("2d");
 
 var xPos = canvas.width/2;
 var yPos = canvas.height-20;
-var xMove = 2;
-var yMove = -2;
+var xMove = 3;
+var yMove = -3;
 var ballRadius = 10;
 
 var paddleHeight = 10;
-var paddleWidth = 75;
+var paddleWidth = 90;
 var paddleX = (canvas.width-paddleWidth)/2;
 var paddleLeft = false;
 var paddleRight = false;
@@ -47,6 +47,8 @@ function notPressed(e) {
     }
 }
 
+// Function that creates the ball
+
 function ball() {
     ctx.beginPath();
     ctx.arc(xPos, yPos, ballRadius, 0, Math.PI*2);
@@ -54,6 +56,8 @@ function ball() {
     ctx.fill();
     ctx.closePath();
 }
+
+// Function that creates the paddle
 
 function paddle() {
     ctx.beginPath();
@@ -63,25 +67,39 @@ function paddle() {
     ctx.closePath()
 }
 
+// Function that controls the paddle and ball behaviour/movement
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ball();
     paddle();
+
     if(xPos + xMove > canvas.width-ballRadius || xPos + xMove < ballRadius) {
         xMove = -xMove;
     }
-    if(yPos + yMove > canvas.height-ballRadius || yPos + yMove < ballRadius) {
+    if(yPos + yMove < ballRadius) {
         yMove = -yMove;
     }
+    else if (yPos + yMove > canvas.height-ballRadius) {
+        if (xPos > paddleX && xPos < paddleX + paddleWidth) {
+            yMove = -yMove;
+        }
+        else {
+            alert("Game over, try again!");
+            document.location.reload();
+        }
+    }
     if(paddleRight && paddleX < canvas.width-paddleWidth) {
-        paddleX += 5;
+        paddleX += 7.5;
     }
     else if(paddleLeft && paddleX > 0) {
-        paddleX -= 5;
+        paddleX -= 7.5;
     }
     xPos += xMove;
     yPos += yMove;
 }
+
+// Function that returns random color
 
 function randomColor() {
     var r = 255*Math.random()|0,
@@ -90,4 +108,4 @@ function randomColor() {
     return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 
-setInterval(draw, 5);
+setInterval(draw, 12.5);
