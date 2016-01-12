@@ -7,8 +7,8 @@ var ctx = canvas.getContext("2d");
 
 var xPos = canvas.width/2;
 var yPos = canvas.height-20;
-var xMove = 3;
-var yMove = -3;
+var xMove = (Math.random()*5)+2;
+var yMove = (Math.random()*5)+2;
 var ballRadius = 10;
 
 // Paddle size and position
@@ -51,6 +51,9 @@ function pressed(e) {
     }
     else if (e.keyCode == 37) {
         paddleLeft = true;
+    }
+    else if (e.keyCode == 32) {
+        document.location.reload();
     }
 }
 
@@ -100,7 +103,7 @@ function paddle() {
     ctx.rect(paddleX, canvas.height-paddleHeight-offset, paddleWidth, paddleHeight);
     ctx.fillStyle = "#3498db";
     ctx.fill();
-    ctx.closePath()
+    ctx.closePath();
 }
 
 // Function that creates bricks
@@ -108,7 +111,7 @@ function paddle() {
 function createBricks() {
     for(c=0; c<brickColumns; c++) {
         for(r=0; r<brickRows; r++) {
-            if(bricks[c][r].status ==1) {
+            if(bricks[c][r].status == 1) {
                 var brickXpos = (c*(brickWidth+brickPadding))+brickOffsetLeft;
                 var brickYpos = (r*(brickHeight+brickPadding))+brickOffsetTop;
                 bricks[c][r].x = brickXpos;
