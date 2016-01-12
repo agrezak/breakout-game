@@ -40,6 +40,8 @@ var score = 0;
 
 document.addEventListener('keydown', pressed, false);
 document.addEventListener('keyup', notPressed, false);
+document.addEventListener("mousemove", mouseMove, false);
+
 
 // End of event listeners
 
@@ -65,6 +67,15 @@ function notPressed(e) {
     }
     else if (e.keyCode === 37) {
         paddleLeft = false;
+    }
+}
+
+// Function that lets the player control the paddle with mouse
+
+function mouseMove(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/3;
     }
 }
 
@@ -176,6 +187,8 @@ function draw() {
     }
     xPos += xMove;
     yPos += yMove;
+
+    requestAnimationFrame(draw);
 }
 
 // Function that returns random color
@@ -187,4 +200,4 @@ function randomColor() {
     return 'rgb(' + r + ',' + g + ',' + b + ')';
 }
 
-setInterval(draw, 12.5);
+draw();
