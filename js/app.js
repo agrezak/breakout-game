@@ -33,6 +33,7 @@ var brickOffsetLeft = 200;
 // Uncategorized variables
 
 var score = 0;
+var ballColor = randomColor();
 
 // End of variables
 
@@ -102,7 +103,7 @@ function scorebar() {
 function ball() {
     ctx.beginPath();
     ctx.arc(xPos, yPos, ballRadius, 0, Math.PI*2);
-    ctx.fillStyle = "#f1c40f";
+    ctx.fillStyle = ballColor;
     ctx.fill();
     ctx.closePath();
 }
@@ -148,6 +149,7 @@ function bricksCollision() {
                     yMove = -yMove;
                     b.status = 0;
                     score++;
+                    ballColor = randomColor();
                 }
             }
         }
